@@ -19,6 +19,14 @@ const app = new Vue({
         incorrect: false
     }, 
     methods: {
+        getRandomOp: getRandomOp, 
+        updateOnCorrect: function() {
+            this.updateData(); 
+            this.incorrect = false; 
+            this.reaponse = ''; 
+            this.updateData(); 
+            this.op = this.getRandomOp(); 
+        },
         updateData: function () {
             this.num1 = Math.ceil(Math.random() * 10); 
             this.num2 = Math.ceil(Math.random() * 10); 
@@ -26,11 +34,8 @@ const app = new Vue({
         checkSubmission: function(e) {
             const answer = parseInt(this.response); 
             if (getActualAnswer(this.op, this.num1, this.num2) === answer) {
-                this.updateData(); 
-                // this.op = getRandomOp(); 
-                console.log(this.response);
-                this.response = ''; 
-                console.log('after: ' + this.response);
+                e.target.value = ''; 
+                this.updateOnCorrect(); 
             } else {
                 this.incorrect = true; 
             }
